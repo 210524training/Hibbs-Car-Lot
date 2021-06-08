@@ -93,3 +93,5 @@
 [2021-06-08T10:54:37.093] [INFO] default - Car of ID 3 was added.
 [2021-06-08T11:01:11.991] [INFO] default - Customer #1made an offer of $1for car #2.
 [2021-06-08T11:01:51.746] [INFO] default - A new customer, ID: 2has decided to shop with us.
+[2021-06-08T11:50:41.150] [INFO] default - Car of ID 4 was added.
+[2021-06-08T11:50:46.118] [WARN] default - Invalid Input

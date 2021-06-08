@@ -90,7 +90,7 @@ export function employeePrompt(): Promise<string> {
   ________________________________________
   `,
           (answer) => {
-            if((!Number.isNaN(Number(answer)) && (Number(answer) <= 4) && (Number(answer) >= 0)) || (answer === 'e')) {
+            if((!Number.isNaN(Number(answer)) && (Number(answer) <= 4) && (Number(answer) >= 0)) || (answer === 'e') || (answer==='r')) {
               resolve(answer);
             } else {
               log.warn('Invalid Input');
