@@ -390,7 +390,9 @@ export async function attemptRegister(): Promise<void> {
     }
     const password = await queryPassword();
     let ID=CarService.Generate_Customer_ID();
-    await DynaDAO.register(new Customer(ID,"Customer",username,password,0));
+    let newCustomer: Customer=new Customer(ID,"Customer",username,password,0)
+    await DynaDAO.register(newCustomer);
+    CarService.CustomerInventory.push(newCustomer);
     await loadData();
     
 };
