@@ -79,6 +79,7 @@ export function employeePrompt(): Promise<string> {
   ________________________________________        
   <<<<<<<<<<<<<<<< Cars >>>>>>>>>>>>>>>>>>
   0. Add a car to lot.
+  r. Remove a car from the lot.
   <<<<<<<<<<<<<<< Offers >>>>>>>>>>>>>>>>>
   1. View offers.
   2. Accept pending offers.
@@ -215,6 +216,21 @@ export function Customer_Submit_ID(): Promise<number> {
           });
       },
     );
+};
+
+export function Emlpoyee_Delete_Car(): Promise<number> {
+  return new Promise<number>(
+    (resolve) => {
+      rl.question('What car do you want to remove?',
+        (answer) => {
+          if(!Number.isNaN(Number(answer)) && (Number(answer) >= 0)) {
+            resolve(parseInt(answer));
+          } else {
+            log.warn('Invalid Input');
+          }
+        });
+    },
+  );
 };
 
 export async function makeOffer(): Promise<void> {
@@ -447,6 +463,10 @@ export async function recievedEmployInput() {
         break;
       case '1':
         CarService.viewOffers();
+        break;
+      case 'r':
+        let carID= await Emlpoyee_Delete_Car();
+        CarService.Deleted_Car_From_Lot(carID);
         break;
       case '2':
         await approveOfferPrompt();

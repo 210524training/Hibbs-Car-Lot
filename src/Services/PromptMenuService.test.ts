@@ -30,7 +30,7 @@ describe('Menus', () => {
           );
           await expect(PrmoptMenuService.initialPrompt()).rejects.toBeUndefined();
         });
-      });
+      })
 
       describe('Function: customerPrompt', () => {
         test('Should resolve when provided with valid Input', async () => {
@@ -50,7 +50,7 @@ describe('Menus', () => {
           );
           await expect(PrmoptMenuService.customerPrompt()).resolves.toBe('false');
         });
-      });
+      })
 
       describe('Function: employeePrompt', () => {
         test('Should resolve when provided with valid Input', async () => {
@@ -70,7 +70,7 @@ describe('Menus', () => {
           );
           await expect(PrmoptMenuService.employeePrompt()).resolves.toBe('false');
         });
-      });
+      })
 
       describe('Function: offerChooseCar', () => {
         test('Should resolve when provided with valid Input', async () => {
@@ -128,4 +128,4 @@ describe('Menus', () => {
           );
           await expect(PrmoptMenuService.Customer_Select_Car_For_Offer()).resolves.toBe('false');
         });
-      });
+      })

@@ -89,3 +89,7 @@
 [2021-06-08T03:00:07.680] [INFO] default - Car of ID: 1is now owned by customer of ID1.
 [2021-06-08T03:00:07.685] [INFO] default - Offer of ID: 1has been accepted
 [2021-06-08T03:00:07.686] [INFO] default - Car of ID: 1 is now owned.
+[2021-06-08T10:54:01.995] [INFO] default - Car of ID 2 was added.
+[2021-06-08T10:54:37.093] [INFO] default - Car of ID 3 was added.
+[2021-06-08T11:01:11.991] [INFO] default - Customer #1made an offer of $1for car #2.
+[2021-06-08T11:01:51.746] [INFO] default - A new customer, ID: 2has decided to shop with us.

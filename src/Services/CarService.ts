@@ -31,6 +31,13 @@ class CarService{
     DynaDAO.add_Car(newCar);
     this.carInventory.push(newCar);
   };
+
+  async Deleted_Car_From_Lot(carID:number){
+    for(let i = 0; i < this.carInventory.length; i++) {
+      if(this.carInventory[i].ID === carID) {
+        DynaDAO.delete_Car(carID);
+      }
+  }}
     
   Car_Available_For_Sale(carId:number): boolean {
         let result:boolean=false;
