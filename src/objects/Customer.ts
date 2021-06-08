@@ -6,7 +6,7 @@ export default class Customer extends User {
         public Type: "Customer",
         public Username: string,
         public Password: string,
-        public Balance: number | null     
+        public Balance: number     
     ) {
         super(ID,Type,Username,Password);
     }

@@ -10,7 +10,7 @@ class CarService{
   constructor(
         public carInventory: Car[] = [],
         public offerInventory: Offer[] = [],
-        public paymentInv: Payment[] = [],
+        public PaymentInventory: Payment[] = [],
         public CustomerInventory: Customer[] = [],
         public EmployeeInventory:Employee[]=[],
   ) {}
@@ -42,6 +42,16 @@ class CarService{
         return result;
   };
 
+  Car_Owned_By_You(carID:number,custID:number): boolean {
+    let result:boolean=false;
+    for(let i = 0; i < this.carInventory.length; i++) {
+      if(this.carInventory[i].ID === carID && this.carInventory[i].Purchased == true && this.carInventory[i].OwnerID==custID) {
+        result=true;
+      }
+    }
+    return result;
+};
+
   Offer_Exists(offerId:number): boolean {
       let result:boolean=false
       for(let i = 0; i < this.offerInventory.length; i++) {
@@ -71,6 +81,15 @@ class CarService{
     }
     return Number(max + 1);
   };
+  Generate_Payment_ID():number {
+    let max = 0;
+    for(let i = 0; i < this.PaymentInventory.length; i++) {
+      if(Number(this.PaymentInventory[i].ID) > max) {
+        max = Number(this.PaymentInventory[i].ID);
+      }
+    }
+    return Number(max + 1);
+  };
 
   async Submit_Car_Offer(CustomerID:number, carId:number, OfferAmount:number) {
     const OfferID = this.Generate_Offer_ID();
@@ -89,43 +108,53 @@ class CarService{
     }
   };
 
-  async Make_Owned(carId:number, custId:number) {
-    await DynaDAO.Assign_Ownership(carId, custId);
+  async Make_Owned(carID:number, custID:number) {
+    await DynaDAO.Assign_Ownership(carID, custID);
     for(let i = 0; i < this.carInventory.length; i++) {
-      if(this.carInventory[i].ID === carId) {
+      if(this.carInventory[i].ID === carID) {
         this.carInventory[i].Purchased = true;
-        this.carInventory[i].OwnerID = custId;
+        this.carInventory[i].OwnerID = custID;
         break;
       }
     }
   };
   
-  async Pay_Bill(paymentId: number,carId:number, custId:number, Amount:number) {
-    const CurrentDate=new Date();
-    const payment = new Payment(paymentId,"Payment",CurrentDate,Amount,custId,carId);
+  async Pay_Bill(carID:number, custID:number, Amount:number) {
+    let paymentID:number=this.Generate_Payment_ID();
+    const payment = new Payment(paymentID,"Payment",Amount,custID,carID);
     DynaDAO.Make_Payment(payment);
-    this.paymentInv.push(payment);
+    this.PaymentInventory.push(payment);
+    for(let i=0;i<this.CustomerInventory!.length!;i++){
+      if(this.CustomerInventory![i].ID!=custID!){
+        this.CustomerInventory![i].Balance!+=Amount!;}
+        DynaDAO.Update_Balance(custID!,this.CustomerInventory![i].Balance!)
+      }
   };
 
-  async Approve_Offer(offerId:number) {
-    let carId :number;
-    let custId :number;
+  async Approve_Offer(offerID:number) {
+    let carID :number;
+    let custID :number;
     let OfferAmount:number;
-    let date :Date;
     let offers:Offer[];
     for(let i = 0; i < this.offerInventory.length; i++) {
-      if(this.offerInventory[i].ID == offerId) {
+      if(this.offerInventory[i].ID == offerID) {
         offers=this.offerInventory;
         let foundflag=true;
         this.offerInventory[i].Status = 'Approved';
-        carId = this.offerInventory[i].CarID;
-        
-        custId = this.offerInventory[i].CustomerID;
+        carID = this.offerInventory[i].CarID;
+        custID = this.offerInventory[i].CustomerID;
         OfferAmount = this.offerInventory[i].OfferAmount;
         if(foundflag==true){
-          await this.Make_Owned(carId, custId);
-          await DynaDAO.Accept_Offer(offerId);
-          await this.Pay_Bill(offerId,carId, custId, OfferAmount);
+          await this.Make_Owned(carID, custID);
+          await DynaDAO.Accept_Offer(offerID);
+          //await this.Pay_Bill(offerID,carID, custID, OfferAmount);
+          for(let i=0;i<this.CustomerInventory!.length;i++){
+            if(this.CustomerInventory![i].ID!=custID!){
+              this.CustomerInventory![i].Balance!-=OfferAmount!;
+              DynaDAO.Update_Balance(custID!,this.CustomerInventory![i].Balance)
+
+            }
+          }
         }
         break;
       }
@@ -144,6 +173,12 @@ class CarService{
   
 };
 
+Cust_findByID(CustomerID: number): Customer | undefined {
+    
+  return this.CustomerInventory.find((Customer) => Customer.ID === CustomerID);
+
+};
+
   logInCustomer(userName: string, password:string): Customer | undefined{
     return this.CustomerInventory.find((Customer) => Customer.Username === userName && Customer.Password === password);
   };
@@ -158,9 +193,9 @@ class CarService{
     }
   };
 
-  viewOwnedCars(custId:number) {
+  viewOwnedCars(custID:number) {
     for(let i = 0; i < this.carInventory.length; i++) {
-      if(this.carInventory[i].OwnerID === custId) {
+      if(this.carInventory[i].OwnerID == custID) {
         console.log(this.carInventory[i]);
       }
     }
@@ -169,15 +204,12 @@ class CarService{
   viewOffers() {
     for(let i = 0; i < this.offerInventory.length; i++) {
       console.log(this.offerInventory[i]);
-      console.log(this.offerInventory[i].ID);
-      console.log(this.offerInventory[i].CarID);
-      console.log(this.offerInventory[i].CustomerID);
     }
   };
 
   viewPayments() {
-    for(let i = 0; i < this.paymentInv.length; i++) {
-      console.log(this.paymentInv[i]);
+    for(let i = 0; i < this.PaymentInventory.length; i++) {
+      console.log(this.PaymentInventory[i]);
     }
   };
 };

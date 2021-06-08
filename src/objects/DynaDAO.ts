@@ -29,24 +29,24 @@ class DynaDAO {
             console.error('Unable to add car.', JSON.stringify(err, null, 2));
           } else {
             console.log('Added item:', JSON.stringify(data, null, 2));
-            log.info('Car of ID'+newCar.ID+"was added.");
+            log.info('Car of ID '+newCar.ID+" was added.");
           }
         });
   };
 
-  async delete_Car(Id:number): Promise<void> {
+  async delete_Car(ID:number): Promise<void> {
         const TableInfo = {
           TableName: 'Car-Lot',
           Key: {
             Type: "Car",
-            ID: Id,
+            ID: ID,
           },
         };
         this.DocClient.delete(TableInfo, (err) => {
           if(err) {
             console.error('Car could not be deleted.', JSON.stringify(err, null, 2));
           } else {
-            log.info("Car of ID: "+Id+"deleted.");
+            log.info("Car of ID: "+ID+" deleted.");
           }
         });
         
@@ -77,8 +77,8 @@ class DynaDAO {
           Item: {
             Type: 'Offer',
             ID: Offer.ID,
-            CarId: Offer.CarID,
-            CustomerId: Offer.CustomerID,
+            CarID: Offer.CarID,
+            CustomerID: Offer.CustomerID,
             OfferAmount: Offer.OfferAmount,
             Status: Offer.Status,
           },
@@ -112,7 +112,7 @@ class DynaDAO {
           if(err) {
             console.error('Could not update offer.', JSON.stringify(err, null, 2));
           } else {
-            log.info("Offer of ID: "+offerID+"was rejected.");
+            log.info("Offer of ID: "+offerID+" was rejected.");
           }
         });
   };
@@ -142,19 +142,19 @@ class DynaDAO {
         });
   };
 
-  async Delete_Offer(offerId:number): Promise<void> {
+  async Delete_Offer(offerID:number): Promise<void> {
         const params = {
           TableName: 'Car-Lot',
           Key: {
             Type:'Offer',
-            ID: offerId,
+            ID: offerID,
           },
         };
         this.DocClient.delete(params, (err) => {
           if(err) {
             console.error('Could not delete offer', JSON.stringify(err, null, 2));
           } else {
-            log.info("Offer of ID"+offerId+"deleted");
+            log.info("Offer of ID"+offerID+"deleted");
           }
         });
         
@@ -168,7 +168,7 @@ class DynaDAO {
             ID: Customer.ID,
             Username: Customer.Username,
             Password: Customer.Password,
-            Balance: Customer.Balance=null
+            Balance: Customer.Balance=0
           },
         };
         this.DocClient.put(params, (err, data) => {
@@ -181,12 +181,12 @@ class DynaDAO {
         });
   };
 
-  async Assign_Ownership(carId:number, custId:number) {
+  async Assign_Ownership(carID:number, custID:number) {
         const params1 = {
           TableName: 'Car-Lot',
           Key: {
             Type: 'Car',
-            ID: carId,
+            ID: carID,
           },
           UpdateExpression: 'set #O = :O',
           ExpressionAttributeNames: {
@@ -200,21 +200,21 @@ class DynaDAO {
           if(err) {
             console.error('Unable to change ownership status.', JSON.stringify(err, null, 2));
           } else {
-            log.info("Car of ID: "+carId+"is now owned.");
+            log.info("Car of ID: "+carID+" is now owned.");
           }
         });
-        /*const params2 = {
+        const params2 = {
           TableName: 'Car-Lot',
           Key: {
             Type: 'Car',
-            ID: carId,
+            ID: carID,
           },
           UpdateExpression: 'set #O=:O',
           ExpressionAttributeNames: {
-            '#O': 'Owner',
+            '#O': 'OwnerID',
           },
           ExpressionAttributeValues: {
-            ':O': custId,
+            ':O': custID,
           },
           ReturnValues: 'UPDATED_NEW',
         };
@@ -222,11 +222,36 @@ class DynaDAO {
           if(err) {
             console.error('Unable to assign ownership.', JSON.stringify(err, null, 2));
           } else {
-            log.info("Car of ID: "+carId+"is now owned by customer of ID"+custId+".");
+            log.info("Car of ID: "+carID+"is now owned by customer of ID"+custID+".");
           }
-        });*/
+        });
+
         
   };
+
+  async Update_Balance(CustomerID:number ,Amount:number){
+    const params1 = {
+      TableName: 'Car-Lot',
+      Key: {
+        Type: 'Customer',
+        ID: CustomerID,
+      },
+      UpdateExpression: 'set #B = :B',
+      ExpressionAttributeNames: {
+        '#B' : 'Balance',
+      },
+      ExpressionAttributeValues: {
+        ':B' : Amount,
+      },
+    };
+    this.DocClient.update(params1, (err) => {
+      if(err) {
+        console.error('Unable to update balance.', JSON.stringify(err, null, 2));
+      } else {
+        log.info("Your balance has been updated.");
+      }
+    });
+  }
 
   async Make_Payment(payment:Payment) {
         const params = {
@@ -235,7 +260,6 @@ class DynaDAO {
             Type: 'payment',
             ID: payment.ID,
             CustomerId: payment.CustomerID,
-            Date: payment.Date,
             Amount: payment.Amount,
             CarID: payment.CarID
           },
@@ -245,7 +269,7 @@ class DynaDAO {
             console.error('Unable to register payment.', JSON.stringify(err, null, 2));
           } else {
             console.log('Payment made:', JSON.stringify(data, null, 2));
-            log.info("A payment of $"+payment.Amount+"was made on"+payment.Date+"by customer #"+payment.CustomerID+"on car #"+payment.CarID+".");
+            log.info("A payment of $"+payment.Amount+" was made by customer #"+payment.CustomerID+" on car #"+payment.CarID+".");
           }
         });
   };

@@ -54,6 +54,8 @@ export function customerPrompt(): Promise<string> {
     0. View cars.
     1. Make offer.
     2. View my cars.
+    3. Make Payment.
+    4. View Balance.
     e. Exit
     ____________________
   `,
@@ -114,6 +116,36 @@ export function Customer_Select_Car_For_Offer(): Promise<number> {
     );
 };
 
+export function Customer_Select_Car_For_Payment(custID:number): Promise<number> {
+  return new Promise<number>(
+    (resolve) => {
+      rl.question('Which car would you like to pay off? (Car ID)',
+        (answer) => {
+          if(CarService.Car_Owned_By_You(parseInt(answer),custID)) {
+            resolve(parseInt(answer));
+          } else {
+            log.warn('That is not your car');
+          }
+        });
+    },
+  );
+};
+
+export function Customer_Select_Payment_Amount(custID:number): Promise<number> {
+  return new Promise<number>(
+    (resolve) => {
+      rl.question('How much would you like to pay?',
+        (answer) => {
+          if(CarService.Car_Owned_By_You(parseFloat(answer),custID)) {
+            resolve(parseFloat(answer));
+          } else {
+            log.warn('The car is already taken or not available');
+          }
+        });
+    },
+  );
+};
+
 export function askOfferId(): Promise<number> {
     return new Promise<number>(
       (resolve) => {
@@ -162,10 +194,9 @@ export async function approveOfferPrompt() {
   let offerId: number;
     while(true) {
       offerId = await askOfferId();
-      if(offerId){
-        //CarService.offerInventory = await DynaDAO.getAllOffers();
-        
+      if(offerId){        
         await CarService.Approve_Offer(offerId);
+                
         break;
       }
     }
@@ -174,7 +205,7 @@ export async function approveOfferPrompt() {
 export function Customer_Submit_ID(): Promise<number> {
     return new Promise<number>(
       (resolve) => {
-        rl.question('What is your customer ID?',
+        rl.question('Confirm ID',
           (answer) => {
             if(!Number.isNaN(Number(answer)) && (Number(answer) >= 0)) {
               resolve(parseInt(answer));
@@ -383,6 +414,17 @@ export async function recievedCustInput(CustomerID:number) {
       case '2':
         CarService.viewOwnedCars(CustomerID);
         break;
+      case '3':
+        let carID:number= await Customer_Select_Car_For_Payment(CustomerID);
+        let Amount:number= await await Customer_Select_Car_For_Payment(CustomerID);
+        CarService.Pay_Bill(carID, CustomerID, Amount)
+        break;
+      case '4':
+        for(let i=0;i<CarService.CustomerInventory!.length;i++){
+          if(CarService.CustomerInventory![i].ID!=CustomerID!){
+            console.log("Your balance is: $"+CarService.CustomerInventory[i].Balance);
+          }}
+        break;
       case 'false':
         log.warn('Invalid Input');
         break;
@@ -446,7 +488,7 @@ export async function loadData(): Promise<String> {
     CarService.carInventory = await DynaDAO.getAllCars();
     CarService.EmployeeInventory=await DynaDAO.getAllEmployees();
     CarService.offerInventory = await DynaDAO.getAllOffers();    
-    CarService.paymentInv = await DynaDAO.getAllPayments();
+    CarService.PaymentInventory = await DynaDAO.getAllPayments();
     
     return 'good';
 };
