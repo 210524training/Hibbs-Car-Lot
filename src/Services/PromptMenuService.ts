@@ -80,6 +80,7 @@ export function employeePrompt(): Promise<string> {
   <<<<<<<<<<<<<<<< Cars >>>>>>>>>>>>>>>>>>
   0. Add a car to lot.
   r. Remove a car from the lot.
+  v. View car lot.
   <<<<<<<<<<<<<<< Offers >>>>>>>>>>>>>>>>>
   1. View offers.
   2. Accept pending offers.
@@ -90,7 +91,7 @@ export function employeePrompt(): Promise<string> {
   ________________________________________
   `,
           (answer) => {
-            if((!Number.isNaN(Number(answer)) && (Number(answer) <= 4) && (Number(answer) >= 0)) || (answer === 'e') || (answer==='r')) {
+            if((!Number.isNaN(Number(answer)) && (Number(answer) <= 4) && (Number(answer) >= 0)) || (answer === 'e') || (answer==='r') ||(answer==='v')) {
               resolve(answer);
             } else {
               log.warn('Invalid Input');
@@ -469,6 +470,9 @@ export async function recievedEmployInput() {
       case 'r':
         let carID= await Emlpoyee_Delete_Car();
         CarService.Deleted_Car_From_Lot(carID);
+        break;
+        case 'v':
+          CarService.viewCars();
         break;
       case '2':
         await approveOfferPrompt();
