@@ -1,11 +1,10 @@
-import { DocumentClient } from "aws-sdk/clients/dynamodb";
-import myDocClient from "../objects/DocClient";
 import Car from "../objects/Car";
 import Customer from '../objects/Customer';
 import Payment from '../objects/Payment';
 import Offer from '../objects/Offer';
 import DynaDAO from '../objects/DynaDAO';
 import Employee from '../objects/Employee';
+
 
 class CarService{
   constructor(
@@ -14,7 +13,6 @@ class CarService{
         public paymentInv: Payment[] = [],
         public CustomerInventory: Customer[] = [],
         public EmployeeInventory:Employee[]=[],
-        private docClient: DocumentClient = myDocClient,
   ) {}
 
   Generate_Car_ID():number {
@@ -35,21 +33,23 @@ class CarService{
   };
     
   Car_Available_For_Sale(carId:number): boolean {
+        let result:boolean=false;
         for(let i = 0; i < this.carInventory.length; i++) {
           if(this.carInventory[i].ID === carId && this.carInventory[i].Purchased !== true) {
-            return true;
+            result=true;
           }
         }
-        return false;
+        return result;
   };
 
   Offer_Exists(offerId:number): boolean {
+      let result:boolean=false
       for(let i = 0; i < this.offerInventory.length; i++) {
-        if(this.offerInventory[i].ID === offerId && this.offerInventory[i].Status === 'Pending') {
-          return true;
+        if(this.offerInventory[i].ID == offerId && this.offerInventory[i].Status == 'Pending') {
+          result=true;
         }
-      }
-      return false;
+      }      
+      return result;
   };
 
   Generate_Offer_ID():number {
@@ -74,8 +74,7 @@ class CarService{
 
   async Submit_Car_Offer(CustomerID:number, carId:number, OfferAmount:number) {
     const OfferID = this.Generate_Offer_ID();
-    const NewDate=new Date();
-    const NewOffer = new Offer(OfferID,"Offer",NewDate,OfferAmount,"Pending",carId,CustomerID);
+    const NewOffer = new Offer(OfferID,"Offer",OfferAmount,"Pending",carId,CustomerID);
     DynaDAO.Make_Offer(NewOffer);
     this.offerInventory.push(NewOffer);
   };
@@ -113,14 +112,16 @@ class CarService{
     let custId :number;
     let OfferAmount:number;
     let date :Date;
+    let offers:Offer[];
     for(let i = 0; i < this.offerInventory.length; i++) {
-      if(this.offerInventory[i].ID === offerId) {
+      if(this.offerInventory[i].ID == offerId) {
+        offers=this.offerInventory;
         let foundflag=true;
         this.offerInventory[i].Status = 'Approved';
         carId = this.offerInventory[i].CarID;
+        
         custId = this.offerInventory[i].CustomerID;
         OfferAmount = this.offerInventory[i].OfferAmount;
-        date = this.offerInventory[i].Date;
         if(foundflag==true){
           await this.Make_Owned(carId, custId);
           await DynaDAO.Accept_Offer(offerId);
@@ -131,9 +132,17 @@ class CarService{
     }
     
   };
-  findByUsername(username: string): Customer | undefined {
-    return this.CustomerInventory.find((Customer) => Customer.Username === username);
+  Cust_findByUsername(username: string): Customer | undefined {
+    
+      return this.CustomerInventory.find((Customer) => Customer.Username === username);
+    
   };
+
+  Emp_findByUsername(username: string): Employee | undefined {
+    
+    return this.EmployeeInventory.find((Employee) => Employee.Username === username);
+  
+};
 
   logInCustomer(userName: string, password:string): Customer | undefined{
     return this.CustomerInventory.find((Customer) => Customer.Username === userName && Customer.Password === password);
@@ -160,6 +169,9 @@ class CarService{
   viewOffers() {
     for(let i = 0; i < this.offerInventory.length; i++) {
       console.log(this.offerInventory[i]);
+      console.log(this.offerInventory[i].ID);
+      console.log(this.offerInventory[i].CarID);
+      console.log(this.offerInventory[i].CustomerID);
     }
   };
 

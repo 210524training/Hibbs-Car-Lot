@@ -71,24 +71,23 @@ class DynaDAO {
         return [];
   };
 
-  async Make_Offer(offer:Offer) {
+  async Make_Offer(Offer:Offer) {
         const params = {
           TableName: 'Car-Lot',
           Item: {
             Type: 'Offer',
-            ID: offer.ID,
-            carId: offer.CarID,
-            customerId: offer.CustomerID,
-            offerPrice: offer.OfferAmount,
-            months: offer.Date,
-            status: offer.Status,
+            ID: Offer.ID,
+            CarId: Offer.CarID,
+            CustomerId: Offer.CustomerID,
+            OfferAmount: Offer.OfferAmount,
+            Status: Offer.Status,
           },
         };
         this.DocClient.put(params, (err) => {
           if(err) {
             console.error('Unable to make offer', JSON.stringify(err, null, 2));
           } else {
-            log.info("Customer #"+offer.CustomerID+"made an offer of $"+offer.OfferAmount+" on "+offer.Date+"for car #"+offer.CarID+".");
+            log.info("Customer #"+Offer.CustomerID+"made an offer of $"+Offer.OfferAmount+"for car #"+Offer.CarID+".");
           }
         });
   };
@@ -183,30 +182,50 @@ class DynaDAO {
   };
 
   async Assign_Ownership(carId:number, custId:number) {
-        const params = {
+        const params1 = {
           TableName: 'Car-Lot',
           Key: {
             Type: 'Car',
             ID: carId,
           },
-          UpdateExpression: 'set #Owned=:p, #Owner=:Owner',
+          UpdateExpression: 'set #O = :O',
           ExpressionAttributeNames: {
-            '#Owned': 'Owned',
-            '#Owner': 'Owner',
+            '#O' : 'Owned',
           },
           ExpressionAttributeValues: {
-            ':p': true,
-            ':Owner': custId,
+            ':O' : true,
+          },
+        };
+        this.DocClient.update(params1, (err) => {
+          if(err) {
+            console.error('Unable to change ownership status.', JSON.stringify(err, null, 2));
+          } else {
+            log.info("Car of ID: "+carId+"is now owned.");
+          }
+        });
+        /*const params2 = {
+          TableName: 'Car-Lot',
+          Key: {
+            Type: 'Car',
+            ID: carId,
+          },
+          UpdateExpression: 'set #O=:O',
+          ExpressionAttributeNames: {
+            '#O': 'Owner',
+          },
+          ExpressionAttributeValues: {
+            ':O': custId,
           },
           ReturnValues: 'UPDATED_NEW',
         };
-        this.DocClient.update(params, (err) => {
+        this.DocClient.update(params2, (err) => {
           if(err) {
             console.error('Unable to assign ownership.', JSON.stringify(err, null, 2));
           } else {
             log.info("Car of ID: "+carId+"is now owned by customer of ID"+custId+".");
           }
-        });
+        });*/
+        
   };
 
   async Make_Payment(payment:Payment) {

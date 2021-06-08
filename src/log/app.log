@@ -1,2 +1,65 @@
 [2021-06-06T23:55:59.644] [INFO] default - A new customer, ID: 1has decided to shop with us.
 [2021-06-07T00:02:34.938] [INFO] default - A new customer, ID: 1has decided to shop with us.
+[2021-06-07T20:41:06.500] [WARN] default - Invalid Input
+[2021-06-07T21:18:06.162] [INFO] default - Car of ID1was added.
+[2021-06-07T21:19:40.774] [INFO] default - Customer #1made an offer of $2 on Mon Jun 07 2021 21:19:40 GMT-0400 (Eastern Daylight Time)for car #1.
+[2021-06-07T21:19:40.777] [INFO] default - Customer #1made an offer of $2 on Mon Jun 07 2021 21:19:40 GMT-0400 (Eastern Daylight Time)for car #1.
+[2021-06-07T21:25:21.888] [INFO] default - Customer #1made an offer of $2 on Mon Jun 07 2021 21:25:21 GMT-0400 (Eastern Daylight Time)for car #1.
+[2021-06-07T21:25:21.891] [INFO] default - Customer #1made an offer of $2 on Mon Jun 07 2021 21:25:21 GMT-0400 (Eastern Daylight Time)for car #1.
+[2021-06-07T21:29:11.737] [WARN] default - Invalid Input
+[2021-06-07T21:30:02.260] [INFO] default - Customer #1made an offer of $2 on Mon Jun 07 2021 21:30:02 GMT-0400 (Eastern Daylight Time)for car #1.
+[2021-06-07T21:30:45.642] [WARN] default - The offer ID does not exist or the status is not pending
+[2021-06-07T21:37:02.722] [WARN] default - The offer ID does not exist or the status is not pending
+[2021-06-07T21:55:55.273] [WARN] default - Invalid Input
+[2021-06-07T22:02:30.013] [INFO] default - Customer #1made an offer of $3 on Mon Jun 07 2021 22:02:29 GMT-0400 (Eastern Daylight Time)for car #1.
+[2021-06-07T22:14:16.105] [INFO] default - Customer #1made an offer of $4 on Mon Jun 07 2021 22:14:15 GMT-0400 (Eastern Daylight Time)for car #1.
+[2021-06-07T22:19:12.785] [INFO] default - Customer #1made an offer of $2 on Mon Jun 07 2021 22:19:12 GMT-0400 (Eastern Daylight Time)for car #1.
+[2021-06-07T22:19:50.737] [INFO] default - A payment of $undefinedwas made onMon Jun 07 2021 22:19:50 GMT-0400 (Eastern Daylight Time)by customer #undefinedon car #undefined.
+[2021-06-07T22:19:50.740] [INFO] default - Offer of ID: 1has been accepted
+[2021-06-07T22:26:21.538] [INFO] default - Customer #1made an offer of $2 on Mon Jun 07 2021 22:26:21 GMT-0400 (Eastern Daylight Time)for car #1.
+[2021-06-07T22:27:33.871] [INFO] default - A payment of $undefinedwas made onMon Jun 07 2021 22:27:33 GMT-0400 (Eastern Daylight Time)by customer #undefinedon car #undefined.
+[2021-06-07T22:27:33.879] [INFO] default - Offer of ID: 1has been accepted
+[2021-06-07T22:40:59.348] [INFO] default - Customer #1made an offer of $2 on Mon Jun 07 2021 22:40:59 GMT-0400 (Eastern Daylight Time)for car #1.
+[2021-06-07T22:42:46.206] [INFO] default - A payment of $undefinedwas made onMon Jun 07 2021 22:42:46 GMT-0400 (Eastern Daylight Time)by customer #undefinedon car #undefined.
+[2021-06-07T22:42:46.210] [INFO] default - Offer of ID: 1has been accepted
+[2021-06-07T22:47:16.121] [INFO] default - Customer #1made an offer of $2 on Mon Jun 07 2021 22:47:15 GMT-0400 (Eastern Daylight Time)for car #1.
+[2021-06-07T22:49:26.626] [INFO] default - A payment of $undefinedwas made onMon Jun 07 2021 22:49:26 GMT-0400 (Eastern Daylight Time)by customer #undefinedon car #undefined.
+[2021-06-07T22:49:26.641] [INFO] default - Offer of ID: 1has been accepted
+[2021-06-07T22:53:07.302] [INFO] default - Customer #1made an offer of $2 on Mon Jun 07 2021 22:53:07 GMT-0400 (Eastern Daylight Time)for car #1.
+[2021-06-07T22:54:24.992] [INFO] default - Customer #1made an offer of $2 on Mon Jun 07 2021 22:54:24 GMT-0400 (Eastern Daylight Time)for car #1.
+[2021-06-07T23:00:37.688] [INFO] default - Customer #1made an offer of $2 on Mon Jun 07 2021 23:00:37 GMT-0400 (Eastern Daylight Time)for car #1.
+[2021-06-07T23:05:58.054] [INFO] default - Offer of ID: 1has been accepted
+[2021-06-07T23:05:58.062] [INFO] default - A payment of $2was made onMon Jun 07 2021 23:05:57 GMT-0400 (Eastern Daylight Time)by customer #undefinedon car #undefined.
+[2021-06-07T23:36:48.219] [INFO] default - Customer #1made an offer of $2 on Mon Jun 07 2021 23:36:48 GMT-0400 (Eastern Daylight Time)for car #1.
+[2021-06-07T23:37:17.620] [INFO] default - A payment of $2was made onMon Jun 07 2021 23:37:17 GMT-0400 (Eastern Daylight Time)by customer #undefinedon car #undefined.
+[2021-06-07T23:37:17.627] [INFO] default - Offer of ID: 1has been accepted
+[2021-06-07T23:42:07.965] [INFO] default - Customer #1made an offer of $2 on Mon Jun 07 2021 23:42:07 GMT-0400 (Eastern Daylight Time)for car #1.
+[2021-06-07T23:43:28.662] [INFO] default - A payment of $2was made onMon Jun 07 2021 23:43:28 GMT-0400 (Eastern Daylight Time)by customer #undefinedon car #undefined.
+[2021-06-07T23:43:28.665] [INFO] default - Offer of ID: 1has been accepted
+[2021-06-07T23:52:26.944] [INFO] default - Customer #1made an offer of $2 on Mon Jun 07 2021 23:52:26 GMT-0400 (Eastern Daylight Time)for car #1.
+[2021-06-07T23:52:56.173] [INFO] default - A payment of $2was made onMon Jun 07 2021 23:52:56 GMT-0400 (Eastern Daylight Time)by customer #undefinedon car #undefined.
+[2021-06-07T23:52:56.176] [INFO] default - Offer of ID: 1has been accepted
+[2021-06-08T00:00:21.706] [INFO] default - Customer #1made an offer of $2 on Tue Jun 08 2021 00:00:21 GMT-0400 (Eastern Daylight Time)for car #1.
+[2021-06-08T00:01:02.175] [INFO] default - A payment of $2was made onTue Jun 08 2021 00:01:02 GMT-0400 (Eastern Daylight Time)by customer #undefinedon car #undefined.
+[2021-06-08T00:01:02.186] [INFO] default - Offer of ID: 1has been accepted
+[2021-06-08T00:05:42.521] [INFO] default - Customer #1made an offer of $2 on Tue Jun 08 2021 00:05:42 GMT-0400 (Eastern Daylight Time)for car #1.
+[2021-06-08T00:06:57.133] [INFO] default - A payment of $2was made onTue Jun 08 2021 00:06:56 GMT-0400 (Eastern Daylight Time)by customer #undefinedon car #undefined.
+[2021-06-08T00:06:57.138] [INFO] default - Offer of ID: 1has been accepted
+[2021-06-08T00:11:28.912] [INFO] default - Customer #1made an offer of $2 on Tue Jun 08 2021 00:11:28 GMT-0400 (Eastern Daylight Time)for car #1.
+[2021-06-08T00:12:02.407] [INFO] default - A payment of $2was made onTue Jun 08 2021 00:12:02 GMT-0400 (Eastern Daylight Time)by customer #undefinedon car #undefined.
+[2021-06-08T00:12:02.410] [INFO] default - Offer of ID: 1has been accepted
+[2021-06-08T00:18:24.337] [INFO] default - Customer #1made an offer of $3 on Tue Jun 08 2021 00:18:24 GMT-0400 (Eastern Daylight Time)for car #1.
+[2021-06-08T00:18:38.291] [INFO] default - Customer #1made an offer of $4 on Tue Jun 08 2021 00:18:38 GMT-0400 (Eastern Daylight Time)for car #1.
+[2021-06-08T00:19:57.080] [INFO] default - Offer of ID: 1has been accepted
+[2021-06-08T00:19:57.086] [INFO] default - A payment of $3was made onTue Jun 08 2021 00:19:56 GMT-0400 (Eastern Daylight Time)by customer #undefinedon car #undefined.
+[2021-06-08T00:21:03.231] [INFO] default - A payment of $4was made onTue Jun 08 2021 00:21:03 GMT-0400 (Eastern Daylight Time)by customer #undefinedon car #undefined.
+[2021-06-08T00:21:03.234] [INFO] default - Offer of ID: 2has been accepted
+[2021-06-08T00:22:13.818] [INFO] default - Customer #1made an offer of $2 on Tue Jun 08 2021 00:22:13 GMT-0400 (Eastern Daylight Time)for car #1.
+[2021-06-08T00:22:53.755] [INFO] default - A payment of $2was made onTue Jun 08 2021 00:22:53 GMT-0400 (Eastern Daylight Time)by customer #undefinedon car #undefined.
+[2021-06-08T00:22:53.759] [INFO] default - Offer of ID: 1has been accepted
+[2021-06-08T00:24:43.153] [WARN] default - Invalid Input
+[2021-06-08T00:25:14.584] [INFO] default - Customer #1made an offer of $2 on Tue Jun 08 2021 00:25:14 GMT-0400 (Eastern Daylight Time)for car #1.
+[2021-06-08T00:26:10.814] [INFO] default - A payment of $2was made onTue Jun 08 2021 00:26:10 GMT-0400 (Eastern Daylight Time)by customer #undefinedon car #undefined.
+[2021-06-08T00:26:10.817] [INFO] default - Offer of ID: 1has been accepted
+[2021-06-08T00:27:42.473] [INFO] default - Customer #1made an offer of $2 on Tue Jun 08 2021 00:27:42 GMT-0400 (Eastern Daylight Time)for car #1.
+[2021-06-08T01:03:45.559] [INFO] default - Customer #1made an offer of $2for car #1.

@@ -37,6 +37,7 @@ export function initialPrompt(): Promise<string> {
               resolve(answer);
             } else {
               log.warn('Invalid Input');
+              exit();
             }
           },
         );
@@ -76,8 +77,8 @@ export function employeePrompt(): Promise<string> {
   ________________________________________        
   <<<<<<<<<<<<<<<< Cars >>>>>>>>>>>>>>>>>>
   0. Add a car to lot.
-  1. Remove car from lot.
   <<<<<<<<<<<<<<< Offers >>>>>>>>>>>>>>>>>
+  1. View offers.
   2. Accept pending offers.
   3. Reject pending offers.
   <<<<<<<<<<<<<<< Payment >>>>>>>>>>>>>>>>
@@ -118,11 +119,13 @@ export function askOfferId(): Promise<number> {
       (resolve) => {
         rl.question('What is the offer ID?',
           (answer) => {
-            if(CarService.Offer_Exists(parseInt(answer))) {
-              resolve(parseInt(answer));
+            let numanswer=parseInt(answer)
+            if(CarService.Offer_Exists(numanswer)) {
+              resolve(numanswer);
             } else {
               log.warn('The offer ID does not exist or the status is not pending');
               console.log('The offer ID does not exist or the status is not pending')
+              exit();
             }
           });
       },
@@ -145,7 +148,7 @@ export function Customer_Choose_Offer(): Promise<number> {
 };
 
 export async function rejectOfferPrompt() {
-    let offerId: number;
+  let offerId: number;
     while(true) {
       offerId = await askOfferId();
       if(offerId){
@@ -156,10 +159,12 @@ export async function rejectOfferPrompt() {
 };
   
 export async function approveOfferPrompt() {
-    let offerId: number|string;
+  let offerId: number;
     while(true) {
       offerId = await askOfferId();
       if(offerId){
+        //CarService.offerInventory = await DynaDAO.getAllOffers();
+        
         await CarService.Approve_Offer(offerId);
         break;
       }
@@ -197,11 +202,6 @@ export async function makeOffer(): Promise<void> {
       await CarService.Submit_Car_Offer(CustomerID,CarID,OfferAmount);
     } else {
       throw new Error('Undefined Customer.');
-    }
-    if(CarID !== undefined) {
-        await CarService.Submit_Car_Offer(CustomerID,CarID,OfferAmount);
-    } else {
-        throw new Error('Undefined Car.');
     }
 };
 
@@ -337,7 +337,7 @@ export async function queryPassword(): Promise<string> {
   
 export async function attemptRegister(): Promise<void> {
     const username = await queryUsername();
-    if(CarService.findByUsername(username)) {
+    if(CarService.Cust_findByUsername(username)) {
       console.log('The provided username is already taken');
       throw new Error('Username already taken');
     }
@@ -350,14 +350,16 @@ export async function attemptRegister(): Promise<void> {
 
 export async function login() {
     const username = await queryUsername();
-    if(CarService.findByUsername(username) === undefined) {
+    if(CarService.Cust_findByUsername(username) === undefined) {
+      if(CarService.Emp_findByUsername(username) === undefined){
       throw new Error('The username does not exit.');
-    }
+    }}
     const password = await getPassword();
     const loggedInCust = CarService.logInCustomer(username, password);
     const loggedInEmp=CarService.Log_In_Employee(username,password);
     if(loggedInCust !== undefined && loggedInCust.Type === 'Customer' ) {
         let CustomerID = loggedInCust!.ID;
+        console.log(`Your ID is ${CustomerID}`);
         await recievedCustInput(CustomerID);
       } else if(loggedInEmp!==undefined && loggedInEmp.Type === 'Employee') {
         await recievedEmployInput();
@@ -396,24 +398,21 @@ export async function recievedEmployInput() {
       let answer = await employeePrompt();
       switch (answer) {
       case '0':
-        CarService.viewCars();
+        let Model= await askCarModel();
+        let Year= await askCarYear();
+        let Price=await askCarPrice();
+        CarService.Put_Car_On_Lot(Model,Year,Price);
         break;
       case '1':
-        await addCarPrompt();
-        break;
-      case '2':
-        await deleteCarPrompt();
-        break;
-      case '3':
         CarService.viewOffers();
         break;
-      case '4':
+      case '2':
         await approveOfferPrompt();
         break;
-      case '5':
+      case '3':
         await rejectOfferPrompt();
         break;
-      case '6':
+      case '4':
         CarService.viewPayments();
         break;
       default:
@@ -446,7 +445,7 @@ export async function loadData(): Promise<String> {
     CarService.CustomerInventory = await DynaDAO.getAllCustomers();
     CarService.carInventory = await DynaDAO.getAllCars();
     CarService.EmployeeInventory=await DynaDAO.getAllEmployees();
-    CarService.offerInventory = await DynaDAO.getAllOffers();
+    CarService.offerInventory = await DynaDAO.getAllOffers();    
     CarService.paymentInv = await DynaDAO.getAllPayments();
     
     return 'good';

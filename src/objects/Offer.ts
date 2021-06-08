@@ -4,7 +4,6 @@ export default class Offer extends tableitem {
     constructor(
         public ID:number,
         public Type:"Offer",
-        public Date:Date,
         public OfferAmount:number,
         public Status:string="Pending",
         public CarID:number,
