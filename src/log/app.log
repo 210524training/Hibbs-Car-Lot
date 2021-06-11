@@ -96,3 +96,17 @@
 [2021-06-08T11:50:41.150] [INFO] default - Car of ID 4 was added.
 [2021-06-08T11:50:46.118] [WARN] default - Invalid Input
 [2021-06-08T11:54:42.322] [INFO] default - A new customer, ID: 3has decided to shop with us.
+[2021-06-08T12:28:08.438] [INFO] default - A new customer, ID: 4has decided to shop with us.
+[2021-06-08T12:28:46.232] [INFO] default - Customer #4made an offer of $4for car #4.
+[2021-06-08T12:29:37.557] [INFO] default - Car of ID 5 was added.
+[2021-06-08T12:29:56.847] [INFO] default - Car of ID: 1 deleted.
+[2021-06-08T12:30:19.723] [INFO] default - Car of ID: 5 deleted.
+[2021-06-08T12:30:25.038] [INFO] default - Car of ID 6 was added.
+[2021-06-08T12:30:46.696] [INFO] default - Car of ID: 2is now owned by customer of ID1.
+[2021-06-08T12:30:46.698] [INFO] default - Car of ID: 2 is now owned.
+[2021-06-08T12:30:46.699] [INFO] default - Offer of ID: 2has been accepted
+[2021-06-08T12:30:46.702] [INFO] default - Your balance has been updated.
+[2021-06-08T12:30:46.703] [INFO] default - Your balance has been updated.
+[2021-06-08T12:31:01.140] [WARN] default - Invalid Input
+[2021-06-08T12:32:17.095] [WARN] default - Invalid Input
+[2021-06-08T12:32:29.212] [WARN] default - That is not your car
